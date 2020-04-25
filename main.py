@@ -23,5 +23,4 @@ class customerFTP():
 
 
 if __name__ == '__main__':
-
     customerFTP().getFileFromCustomerFTP()
