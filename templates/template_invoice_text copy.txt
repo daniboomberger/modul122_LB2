@@ -1,0 +1,61 @@
+
+$firmname
+$name
+$address
+$firm_location
+$uid
+
+
+
+
+$location, den $date                           $receiver_firm
+                                                 $receiver_firm_address
+                                                 $receiver_firm_location
+												  
+Kundennummer:      $customer_number
+Auftragsnummer:    $job_number
+	 
+Rechnung Nr       $invoice_number
+-----------------------
+$positions_text
+                                                              -----------       
+								            Total CHF         $total_price  
+
+											MWST  CHF            0.00
+
+
+
+
+						 
+
+
+
+
+
+
+
+
+
+
+
+Zahlungsziel ohne Abzug 30 Tage ($calculated_date)
+
+Einzahlungsschein
+
+
+
+
+
+
+
+
+
+
+
+    $total_price                 $total_price      $receiver_firm
+                                               $receiver_firm_address
+0 00000 00000 00000                            $receiver_firm_location
+
+$receiver_firm
+$receiver_firm_address
+$receiver_firm_location
