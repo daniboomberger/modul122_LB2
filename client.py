@@ -25,3 +25,9 @@ class customerFTP():
             if file.endswith(configuration.FILE_ENDING):  
                 self.client_ftp.retrbinary("RETR " + file , open(file, 'wb').write)
                 self.client_ftp.retrbinary("RETR " + file , self.handle_binary)
+    
+    def getDirInfo(self):
+        data = []
+        self.client_ftp.dir(data.append)
+        for line in data:
+            print(line) 

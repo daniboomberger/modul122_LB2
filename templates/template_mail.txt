@@ -1,0 +1,7 @@
+Sehr geehrter $customer_name
+
+Am $receipt_date um $receipt_time wurde die erfolgreiche Bearbeitung der $invoice_number
+vom Zahlungssystem "$ftp_server" gemeldet.
+
+Mit Freundlichen Grüssen
+Din Jakupi

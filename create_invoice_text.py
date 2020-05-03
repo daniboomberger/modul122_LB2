@@ -12,7 +12,7 @@ class createInvoice():
         invoice_template = Template(invoice_text)
         self.createInvoicePosString(invoice_positions)
         calculated_price = "{:10.2f}".format(calculated_price)
-        filename = open(invoice_data[1].replace('Auftrag_', '') + "_" + invoice_data[0].replace('\'Rechnung_', '') + ".txt", "w", encoding='utf-8')
+        filename = open(invoice_data[7] + "_" + invoice_data[0].replace('\'Rechnung_', '') + "_invoice.txt", "w", encoding='utf-8')
         
         try:
             self.finished_invoice_text = invoice_template.substitute(
@@ -39,7 +39,7 @@ class createInvoice():
             print('failed to create new file')
     
     def createInvoicePosString(self, position_data):
-        invoice_position_template_text = open(configuration.TEMPLATE_INVOICE_POSITION).read()
+        invoice_position_template_text = open(configuration.TEMPLATE_INVOICE_TEXT_POSITION).read()
         invoice_postion_template = Template(invoice_position_template_text)
 
         for i in range(0, len(position_data)):
