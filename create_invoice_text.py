@@ -1,4 +1,5 @@
 import configuration
+import create_log
 from string import Template
 
 class createInvoice():
@@ -7,6 +8,7 @@ class createInvoice():
         self.finished_invoice_text = ''
         self.positions_text = ''
 
+    #creates the invoice.txt locally 
     def writeInvoice(self, invoice_data, calculated_date, invoice_positions, calculated_price):
         invoice_text = open(configuration.TEMPLATE_INVOICE_TEXT).read()
         invoice_template = Template(invoice_text)
@@ -36,21 +38,25 @@ class createInvoice():
 
             filename.write(self.finished_invoice_text)
         except:
-            print('failed to create new file')
+            create_log.log().createLog('failed to create: ' + filename)
     
+    #creates a dynamic string for position (its possible to get multiple invoice positions in .data file)
     def createInvoicePosString(self, position_data):
         invoice_position_template_text = open(configuration.TEMPLATE_INVOICE_TEXT_POSITION).read()
         invoice_postion_template = Template(invoice_position_template_text)
 
-        for i in range(0, len(position_data)):
-            self.positions_text += invoice_postion_template.substitute(
-                    position_id = position_data[i][1],
-                    position_description = position_data[i][2],
-                    quantity = position_data[i][3],
-                    price_pre_quantity = position_data[i][4],
-                    price = position_data[i][5],
-                    mwst = position_data[i][6]
-            )
+        try:         
+            for i in range(0, len(position_data)):
+                self.positions_text += invoice_postion_template.substitute(
+                        position_id = position_data[i][1],
+                        position_description = position_data[i][2],
+                        quantity = position_data[i][3],
+                        price_pre_quantity = position_data[i][4],
+                        price = position_data[i][5],
+                        mwst = position_data[i][6]
+                )
+        except:
+            create_log.log().createLog('failed to create invoice position template for text')
     
     
         
