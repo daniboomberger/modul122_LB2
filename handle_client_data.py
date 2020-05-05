@@ -17,17 +17,21 @@ class prepareInvoiceData():
     
     #reads out the data of the .data file and puts it a list
     def prepare_data(self, data):
-        global string_invoice_data
-        string_data = str(data)
-        string_data = string_data.replace('\\r\\n', ';')
-        string_data = string_data.split(';')
-        for splitted_data in string_data:
-            self.invoice_data.append(splitted_data)
-        self.calculateDate()
-        self.calculateInvoicePos()
-        create_invoice_text.createInvoice().writeInvoice(self.invoice_data, datetime.datetime.strftime(self.calculated_date, "%d.%m.%Y"), self.invoice_position_data, self.calculated_price)
-        create_invoice_xml.createInvoiceXml().createXml(self.invoice_data, datetime.datetime.strftime(self.calculated_date, "%d.%m.%Y"), self.invoice_position_data, self.calculated_price, self.calculated_total_with_vat, self.vat)
-        string_invoice_data = self.invoice_data
+        try:
+            global string_invoice_data
+            string_data = str(data)
+            string_data = string_data.replace('\\r\\n', ';')
+            string_data = string_data.split(';')
+            for splitted_data in string_data:
+                self.invoice_data.append(splitted_data)
+            self.calculateDate()
+            self.calculateInvoicePos()
+            create_invoice_text.createInvoice().writeInvoice(self.invoice_data, datetime.datetime.strftime(self.calculated_date, "%d.%m.%Y"), self.invoice_position_data, self.calculated_price)
+            create_invoice_xml.createInvoiceXml().createXml(self.invoice_data, datetime.datetime.strftime(self.calculated_date, "%d.%m.%Y"), self.invoice_position_data, self.calculated_price, self.calculated_total_with_vat, self.vat)
+            string_invoice_data = self.invoice_data
+        except:
+            create_log.log().createLog('wrong data in the csv-file, pls check the csv file')
+            
         
     #calculates the data +30days
     def calculateDate(self):
@@ -36,18 +40,15 @@ class prepareInvoiceData():
     
     #calculates the Invoice Positios
     def calculateInvoicePos(self):
-        try:
-            invoice_integer = 19
-            for y in range(0, int((len(self.invoice_data) - 18) / 7)):
-                self.invoice_position_data.append([])
-                for i in range(0, 7):
-                    self.invoice_position_data[y].append(self.invoice_data[invoice_integer + i])
-                    if i  ==  6:
-                        invoice_integer = invoice_integer + 7
-                        self.calculated_price = round(self.calculated_price, 2) + round(float(self.invoice_position_data[y][5]), 2)
-            self.calculateVAT(self.invoice_position_data[y][6])
-        except:
-            create_log.log().createLog('.data file has not the right data')
+        invoice_integer = 19
+        for y in range(0, int((len(self.invoice_data) - 18) / 7)):
+            self.invoice_position_data.append([])
+            for i in range(0, 7):
+                self.invoice_position_data[y].append(self.invoice_data[invoice_integer + i])
+                if i  ==  6:
+                    invoice_integer = invoice_integer + 7
+                    self.calculated_price = round(self.calculated_price, 2) + round(float(self.invoice_position_data[y][5]), 2)
+        self.calculateVAT(self.invoice_position_data[y][6])
 
     
     #calculates the vat (mwst)
